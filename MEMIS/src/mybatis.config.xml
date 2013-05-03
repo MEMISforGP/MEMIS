@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 配置mybatis的映射规则，将下划线映射成驼峰规则 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.xiaocq.domain.User" alias="User" />
+		<typeAlias type="com.xiaocq.domain.Student" alias="Student"/>
+		<typeAlias type="com.xiaocq.domain.TwoAttributes" alias="TwoAttributes"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="com/xiaocq/mybatis/mapper/UserMapper.xml" />
+		<mapper resource="com/xiaocq/mybatis/mapper/StudentMapper.xml"/>
+		<mapper resource="com/xiaocq/mybatis/mapper/ParamMapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties mainApplicationPath="MEMIS.mxml" projectUUID="b213ef3a-a590-42f9-8cd9-e0cf93c2895c" version="6">
+  <compiler additionalCompilerArguments="-services &quot;C:\Program Files\Apache Software Foundation\Tomcat 6.0\wtpwebapps\MEMIS\WEB-INF\flex\services-config.xml&quot; -locale zh_CN" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="C:/Program Files/Apache Software Foundation/Tomcat 6.0/wtpwebapps/MEMIS/MEMIS-debug" outputFolderPath="bin-debug" sourceFolderPath="flex-src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <theme themeIsDefault="false" themeIsSDK="true" themeLocation="${SDK_THEMES_DIR}/frameworks/themes/Halo"/>
+  <applications>
+    <application path="MEMIS.mxml"/>
+  </applications>
+  <modules>
+    <module application="flex-src/MEMIS.mxml" destPath="com/xiaocq/components/UserUI.swf" optimize="true" sourcePath="flex-src/com/xiaocq/components/UserUI.mxml"/>
+    <module application="flex-src/MEMIS.mxml" destPath="com/xiaocq/components/StudentUI.swf" optimize="true" sourcePath="flex-src/com/xiaocq/components/StudentUI.mxml"/>
+  </modules>
+  <buildCSSFiles/>
+</actionScriptProperties>

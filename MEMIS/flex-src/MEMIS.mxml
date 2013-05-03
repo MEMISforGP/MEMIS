@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="init()" xmlns:local="*" xmlns:components="com.xiaocq.components.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.events.ListEvent;
+			import mx.formatters.DateFormatter;
+			
+			import org.osmf.events.TimeEvent;
+			private var _currentDate : Date;
+			private var _date : String;
+			private var _time : String;
+			private var timer : Timer;
+			private var dateFormatter : DateFormatter;
+			
+			private function init() : void{
+				dateFormatter = new DateFormatter();
+				dateFormatter.formatString = "YYYY年MM月DD日";
+				
+				showCurrentTime();
+				
+				timer = new Timer(1000);
+				timer.addEventListener(TimerEvent.TIMER, timeHandler);
+				timer.start();
+				
+			}
+			
+			private function showCurrentTime() : void{
+				_currentDate = new Date();
+				_date = dateFormatter.format(_currentDate);
+				_time = _currentDate.toLocaleTimeString();
+				
+				date.text = _date;
+				time.text = _time;
+			}
+			
+			private function timeHandler(event : TimerEvent) : void{
+				showCurrentTime();
+			}
+			
+			private function clickTest(event : ListEvent) : void{
+				var item : Object = Tree(event.currentTarget).selectedItem;
+				if (tree.dataDescriptor.isBranch(item) == false) {  //判断是不是叶子节点，是才处理
+					//Alert.show(tree.selectedItem.@label);
+					
+					if(tree.selectedItem.@label == "用户管理"){
+						navigatorStack.selectedIndex = 0;
+					}else if(tree.selectedItem.@label == "学生信息管理"){
+						navigatorStack.selectedIndex = 1;
+					}
+				}  
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<fx:XMLList id="navigator">
+			<node label = "综合管理">
+				<node label="系统管理">
+					<node label="用户管理"/>
+					<node label="学生信息管理"/>
+					<node label="企业信息管理"/>
+				</node>
+				<node label="招聘管理">
+					<node label="招聘信息查询"/>
+					<node label="招聘信息录入"/>
+				</node>
+				<node label="数据统计"/>
+			</node>			
+		</fx:XMLList>
+	</fx:Declarations>
+	<s:Panel width="100%" height="100%" title="就业信息管理系统(EIMS)" fontWeight="bold" fontFamily="Courier New" fontSize="12" horizontalCenter="0">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		
+		<s:HGroup width="100%" height="5%">
+			<s:HGroup width="90%" height="100%">
+				<mx:Text width="15%" height="100%" id="date" textAlign="center"/>
+				<mx:Text width="15%" height="100%" id="time"/>
+			</s:HGroup>
+			
+			<s:HGroup width="10%" height="100%">
+				<mx:VRule width="1" height="100%" strokeColor="#FEFEFE"/>
+				<mx:LinkButton label="注销" width="100%" id="logout" height="5%"/>
+				<mx:VRule width="1" height="100%" strokeColor="#FEFEFE"/>
+				<mx:LinkButton label="退出" width="100%" height="5%" id="exit"/>
+			</s:HGroup>
+		</s:HGroup>
+		
+		<mx:HDividedBox width="100%" height="95%" id="frame">
+			<s:VGroup width="15%" height="100%">
+				<mx:Tree id="tree" width="100%" height="100%"  showRoot="false" dataProvider="{navigator}" labelField="@label" itemClick="clickTest(event)"/>
+			</s:VGroup>
+			<mx:ViewStack width="85%" height="100%" id="navigatorStack">
+				<s:NavigatorContent label="UserUI">
+					<components:UserUI id="userUI"/>
+				</s:NavigatorContent>
+				<s:NavigatorContent label="StudentUI">
+					<components:StudentUI id="studentUI"/>
+				</s:NavigatorContent>
+			</mx:ViewStack>
+		</mx:HDividedBox>
+		
+	</s:Panel>
+</s:Application>

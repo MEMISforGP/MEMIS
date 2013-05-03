@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaocq.mybatis.mapper.UserMapper">
+	
+	<select id="getUserById" resultType="User" parameterType="int">
+		select
+		* from user where id = #{id}
+	</select>
+
+	<select id="loginByNameAndPwd" parameterType="User" resultType="User">
+		select * from user where username = #{username} and password
+		= #{password}
+	</select>
+
+	<update id="updateUser" parameterType="User">
+		update user set password =
+		#{password}, user_type = #{userType} where id = #{id}
+	</update>
+
+	<update id="recordLastLoginDate" parameterType="User">
+		update user set
+		last_login_date = #{lastLoginDate} where id = #{id}
+	</update>
+
+	<insert id="addUser" parameterType="User">
+		insert into user(username,
+		password, user_type, register_date, last_login_date)
+		values(#{username}, #{password}, #{userType}, #{registerDate},
+		#{lastLoginDate})
+	</insert>
+	
+	<select id="getUserByUsername" parameterType="User" resultType="User">
+		select * from user
+		<where>
+			<if test="username != null">
+				username like CONCAT('%','${username}','%')
+			</if>
+		</where>
+	</select>
+</mapper>

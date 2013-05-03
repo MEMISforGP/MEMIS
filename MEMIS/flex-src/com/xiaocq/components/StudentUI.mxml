@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
+		 creationComplete="init()" xmlns:components="com.xiaocq.components.*">
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xiaocq.domain.Student;
+			import com.xiaocq.domain.TwoAttributes;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var grades : ArrayCollection;
+			
+			[Bindable]
+			private var department : ArrayCollection;
+			
+			[Bindable]
+			private var major : ArrayCollection;
+			
+			[Bindable]
+			private var students : ArrayCollection;
+			
+			private var std : Student = new Student(); //store the query condition of student info
+			
+			private function init() : void{
+				paramService.getGrades();
+				paramService.getDepartment();
+			}
+			
+			private function getDepartment(event : IndexChangeEvent) : void{
+				var departId : int = TwoAttributes(selectDepartment.selectedItem).id;
+				paramService.getMajor(departId);
+			}
+			
+			private function queryWithCondition(event : MouseEvent) : void{
+				var isHandled : Boolean = false;
+				if(selectGrade.selectedIndex >= 0){
+					std.grade = TwoAttributes(selectGrade.selectedItem).id;
+					isHandled = true;
+				}
+				
+				if(selectMajor.selectedIndex >= 0){
+					std.major = TwoAttributes(selectMajor.selectedItem).id;
+					isHandled = true;
+				}
+				
+				if(selectDepartment.selectedIndex >= 0){
+					std.department = TwoAttributes(selectDepartment.selectedItem).id;
+					isHandled = true;
+				}
+				
+				if(inputStuNum.text != null && inputStuNum.text != ""){
+					std.stuNum = inputStuNum.text;
+					isHandled = true;
+				}
+				
+				if(inputName.text != null && inputName.text != ""){
+					std.realName = inputName.text;
+					isHandled = true;
+				}
+				
+				if(isHandled == true){
+					studentService.getStudentsByDetail(std);
+				}else{
+					Alert.show("至少输入一个查询条件！");
+				}
+			}
+			
+			private function resetAll(event : MouseEvent) : void{
+				std.stuNum = null;
+				std.department = 0;
+				std.grade = 0;
+				std.major = 0;
+				std.realName = null;
+				
+				selectDepartment.selectedIndex = -1;
+				selectGrade.selectedIndex = -1;
+				selectMajor.selectedIndex = -1;
+				inputName.text = "";
+				inputStuNum.text = "";
+				
+				grades.removeAll();
+				major.removeAll();
+			}
+			
+			<!-- 处理与RemoteObject对象交互的处理函数 -->
+			private function resultGrades(event : ResultEvent) : void{
+				grades = ArrayCollection(event.result);
+			}
+			
+			private function resultDepartment(event : ResultEvent) : void{
+				department = ArrayCollection(event.result);
+			}
+			
+			private function resultMajor(event : ResultEvent) : void{
+				major = ArrayCollection(event.result);
+			}
+			
+			private function resultStudent(event : ResultEvent) : void{
+				students = ArrayCollection(event.result);
+				
+				showStudent.initData(students);
+			}
+			
+			private function displayEditUI(event : MouseEvent) : void{
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:RemoteObject id="paramService" destination="paramService">
+			<s:method name="getGrades" result="resultGrades(event)"/>
+			<s:method name="getDepartment" result="resultDepartment(event)"/>
+			<s:method name="getMajor" result="resultMajor(event)"/>
+		</s:RemoteObject>
+		
+		<s:RemoteObject id="studentService" destination="studentService" result="resultStudent(event)" />
+	</fx:Declarations>
+	
+	<mx:VDividedBox width="100%" height="100%" id="studentQueryAndDetail" verticalAlign="middle" horizontalAlign="center">
+		<s:VGroup width="100%" horizontalAlign="center">
+			<mx:Grid width="50%">
+				<mx:GridRow>
+					<mx:GridItem>
+						<s:Label width="20%" text="学院"/>
+						<s:ComboBox width="80%" id="selectDepartment" dataProvider="{department}" labelField="name" change="getDepartment(event)"/>
+					</mx:GridItem>
+					<mx:GridItem>
+						<s:Label width="20%" text="专业"/>
+						<s:ComboBox width="80%" id="selectMajor" dataProvider="{major}" labelField="name"/>
+					</mx:GridItem>
+					<mx:GridItem>
+						<s:Label width="30%" text="年级"/>
+						<s:ComboBox width="70%" id="selectGrade" dataProvider="{grades}" labelField="name"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow>
+					<mx:GridItem>
+						<s:Label width="20%" text="学号"/>
+						<s:TextInput width="80%" id="inputStuNum"/>
+					</mx:GridItem>
+					<mx:GridItem>
+						<s:Label width="20%" text="姓名"/>
+						<s:TextInput width="80%" id="inputName"/>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+			<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center" gap="10">
+				<s:Button id="resetQuery" label="重置" width="10%" click="resetAll(event)"/>
+				<s:Button id="submitQuery" label="查询" width="10%" click="queryWithCondition(event)"/>
+			</s:HGroup>
+		</s:VGroup>
+		
+		<s:VGroup width="100%" height="70%" verticalAlign="middle" gap="5" horizontalAlign="center">
+			<components:MyDataGrid id="showStudent">
+				<components:myGridColumns>
+					<mx:DataGridColumn headerText="编号" dataField="stuId"/>
+					<mx:DataGridColumn headerText="学号" dataField="stuNum"/>
+					<mx:DataGridColumn headerText="姓名" dataField="realName"/>
+					<mx:DataGridColumn headerText="操作">
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:LinkButton width="50%" height="75%" label="编辑" click="parentDocument.parentDocument.displayEditUI(event)"/>
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+				</components:myGridColumns>
+			</components:MyDataGrid>
+		</s:VGroup>
+	</mx:VDividedBox>
+	
+	
+</s:Group>
