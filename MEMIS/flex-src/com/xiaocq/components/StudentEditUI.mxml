@@ -15,8 +15,10 @@
 			import com.xiaocq.domain.Student;
 			
 			import mx.collections.ArrayCollection;
+			import mx.core.IFlexDisplayObject;
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
 			
 			[Bindable]
 			private var gradeData : ArrayCollection;
@@ -29,28 +31,38 @@
 			
 			private var student : Student;
 			
+			public function setStudent(std : Student) : void{
+				this.student = std;
+			}
+			
+			public function getStudent() : Student{
+				return this.student;
+			}
+			
 			private function init() : void{
 				paramService.getGrades();
 				paramService.getDepartment();
-				pararmService.getMajor(student.department);
+				paramService.getMajor(student.department);
 				
 				<!-- 初始化界面上的默认值 -->
 				showStuNum.text = student.stuNum;
 				showRealName.text = student.realName;
 				
-				for(var i : int = 0; i<gradeData.length; i++){
+				var i : int;
+				
+				for(i = 0; i<gradeData.length; i++){
 					if(gradeData.getItemAt(i).id == student.grade){
 						showGrade.selectedIndex = i;
 					}
 				}
 				
-				for(var i : int = 0; i<departmentData.length; i++){
+				for(i = 0; i<departmentData.length; i++){
 					if(departmentData.getItemAt(i).id == student.department){
 						showDepartment.selectedIndex = i;
 					}
 				}
 				
-				for(var i : int = 0; i<majorData.length; i++){
+				for(i = 0; i<majorData.length; i++){
 					if(majorData.getItemAt(i).id == student.major){
 						showMajor.selectedIndex = i;
 					}
@@ -61,12 +73,16 @@
 				PopUpManager.removePopUp(event.target as IFlexDisplayObject);
 			}
 			
+			private function cancelWindow(event : MouseEvent) : void{
+				PopUpManager.removePopUp(this);
+			}
+			
 			private function submitStudent(event : MouseEvent) : void{
 				if(showStuNum.text != ""){
 					student.stuNum = showStuNum.text;
 				}
 				
-				if(showRealName != ""){
+				if(showRealName.text != ""){
 					student.realName = showRealName.text;
 				}
 				
@@ -103,7 +119,7 @@
 			<s:method name="getMajor" result="resultMajor(event)"/>
 		</s:RemoteObject>
 		
-		<s:RemoteObject id="studentService" destination="studentService" result="resultStudent(event)" />
+		<s:RemoteObject id="studentService" destination="studentService" />
 		
 	</fx:Declarations>
 	
