@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   width="650" height="300" title="编辑学生"
+			   close="closeWindow(event)"
+			   creationComplete="init()"
+			   textAlign="center">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xiaocq.domain.Student;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			private var gradeData : ArrayCollection;
+			
+			[Bindable]
+			private var departmentData : ArrayCollection;
+			
+			[Bindable]
+			private var majorData : ArrayCollection;
+			
+			private var student : Student;
+			
+			private function init() : void{
+				paramService.getGrades();
+				paramService.getDepartment();
+				pararmService.getMajor(student.department);
+				
+				<!-- 初始化界面上的默认值 -->
+				showStuNum.text = student.stuNum;
+				showRealName.text = student.realName;
+				
+				for(var i : int = 0; i<gradeData.length; i++){
+					if(gradeData.getItemAt(i).id == student.grade){
+						showGrade.selectedIndex = i;
+					}
+				}
+				
+				for(var i : int = 0; i<departmentData.length; i++){
+					if(departmentData.getItemAt(i).id == student.department){
+						showDepartment.selectedIndex = i;
+					}
+				}
+				
+				for(var i : int = 0; i<majorData.length; i++){
+					if(majorData.getItemAt(i).id == student.major){
+						showMajor.selectedIndex = i;
+					}
+				}
+			}
+			
+			private function closeWindow(event : CloseEvent) : void{
+				PopUpManager.removePopUp(event.target as IFlexDisplayObject);
+			}
+			
+			private function submitStudent(event : MouseEvent) : void{
+				if(showStuNum.text != ""){
+					student.stuNum = showStuNum.text;
+				}
+				
+				if(showRealName != ""){
+					student.realName = showRealName.text;
+				}
+				
+				student.department = showDepartment.selectedItem.id;
+				student.major = showMajor.selectedItem.id;
+				student.grade = showGrade.selectedItem.id;
+				
+				studentService.updateStudent(student);
+				
+				PopUpManager.removePopUp(this);
+			}
+			
+			<!-- 处理与RemoteObject对象交互的处理函数 -->
+			private function resultGrades(event : ResultEvent) : void{
+				gradeData = ArrayCollection(event.result);
+			}
+			
+			private function resultDepartment(event : ResultEvent) : void{
+				departmentData = ArrayCollection(event.result);
+			}
+			
+			private function resultMajor(event : ResultEvent) : void{
+				majorData = ArrayCollection(event.result);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:RemoteObject id="paramService" destination="paramService">
+			<s:method name="getGrades" result="resultGrades(event)"/>
+			<s:method name="getDepartment" result="resultDepartment(event)"/>
+			<s:method name="getMajor" result="resultMajor(event)"/>
+		</s:RemoteObject>
+		
+		<s:RemoteObject id="studentService" destination="studentService" result="resultStudent(event)" />
+		
+	</fx:Declarations>
+	
+	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
+		<s:Label text="学号" width="10%"/>
+		<s:Label id="showStuNum" width="20%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
+		<s:Label text="姓名" width="10%"/>
+		<s:Label id="showRealName" width="20%"/>
+	</s:HGroup>
+	
+	
+	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
+		<s:Label text="年级" width="10%"/>
+		<s:ComboBox id="showGrade" dataProvider="{gradeData}" width="20%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
+		<s:Label text="学院" width="10%"/>
+		<s:ComboBox id="showDepartment" dataProvider="{departmentData}" width="20%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
+		<s:Label text="专业" width="10%"/>
+		<s:ComboBox id="showMajor" dataProvider="{majorData}" width="20%"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" height="60%" horizontalAlign="center" verticalAlign="middle" gap="10">
+		<s:Button label="提交" id="submit" width="10%" click="submitStudent(event)"/>
+		<s:Button label="取消" id="cancel" width="10%" click="cancelWindow(event)"/>
+	</s:HGroup>
+	
+</s:TitleWindow>

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexProperties enableServiceManager="false" flexServerFeatures="4" flexServerType="2" serverContextRoot="/MEMIS" serverRoot="C:/Program Files/Apache Software Foundation/Tomcat 6.0/wtpwebapps/MEMIS" serverRootURL="http://localhost:8080/MEMIS" toolCompile="true" useServerFlexSDK="false" version="2"/>
+<flexProperties enableServiceManager="false" flexServerFeatures="4" flexServerType="2" serverContextRoot="/MEMIS" serverRoot="D:/Program Files/Apache Software Foundation/Tomcat 6.0/wtpwebapps/MEMIS" serverRootURL="http://localhost:8080/MEMIS" toolCompile="true" useServerFlexSDK="false" version="2"/>
