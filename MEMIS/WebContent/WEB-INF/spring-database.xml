@@ -36,5 +36,10 @@
 		<property name="mapperInterface" value="com.xiaocq.mybatis.mapper.ParamMapper"></property>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
+	
+	<bean id="enterpriseDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.xiaocq.mybatis.mapper.EnterpriseMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
 
 </beans>

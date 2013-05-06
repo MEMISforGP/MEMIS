@@ -13,7 +13,7 @@ public interface StudentService {
 	
 	public void deleteStudent(int id);
 	
-	public void addStudent(Student studnet);
+	public void addStudent(Student student);
 	
 	public void addStudents(List<Student> students);
 	

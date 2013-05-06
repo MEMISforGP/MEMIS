@@ -14,23 +14,24 @@
 				stuNum like CONCAT('%','${stuNum}','%')
 			</if>
 			<if test="realName != null">
-				real_name like CONCAT('%','${realName}','%')
+				and real_name like CONCAT('%','${realName}','%')
 			</if>
 			<if test="department > 0">
-				department = ${department}
+				and department = ${department}
 			</if>
 			<if test="major > 0">
-				major = ${major}
+				and major = ${major}
 			</if>
 			<if test="grade > 0">
-				grade = ${grade}
+				and grade = ${grade}
 			</if>
 		</where>
 	</select>
 	
 	<update id="updateStudent" parameterType="Student">
 		update student set stuNum = #{stuNum},
-		real_Name = #{realName},
+		real_name = #{realName},
+		grade = #{grade},
 		department = #{department},
 		major = #{major}
 		where stuId = #{stuId}

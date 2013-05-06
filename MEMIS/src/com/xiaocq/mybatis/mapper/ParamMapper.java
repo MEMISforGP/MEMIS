@@ -10,4 +10,8 @@ public interface ParamMapper {
 	public List<TwoAttributes> getMajor(int departId);
 	
 	public List<TwoAttributes> getGrades();
+	
+	public List<TwoAttributes> getCategorys();
+	
+	public List<TwoAttributes> getScale();
 }

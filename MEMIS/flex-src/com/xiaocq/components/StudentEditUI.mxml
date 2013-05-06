@@ -48,25 +48,6 @@
 				showStuNum.text = student.stuNum;
 				showRealName.text = student.realName;
 				
-				var i : int;
-				
-				for(i = 0; i<gradeData.length; i++){
-					if(gradeData.getItemAt(i).id == student.grade){
-						showGrade.selectedIndex = i;
-					}
-				}
-				
-				for(i = 0; i<departmentData.length; i++){
-					if(departmentData.getItemAt(i).id == student.department){
-						showDepartment.selectedIndex = i;
-					}
-				}
-				
-				for(i = 0; i<majorData.length; i++){
-					if(majorData.getItemAt(i).id == student.major){
-						showMajor.selectedIndex = i;
-					}
-				}
 			}
 			
 			private function closeWindow(event : CloseEvent) : void{
@@ -98,14 +79,32 @@
 			<!-- 处理与RemoteObject对象交互的处理函数 -->
 			private function resultGrades(event : ResultEvent) : void{
 				gradeData = ArrayCollection(event.result);
+				
+				for(var i : int = 0; i<gradeData.length; i++){
+					if(gradeData.getItemAt(i).id == student.grade){
+						showGrade.selectedIndex = i;
+					}
+				}
 			}
 			
 			private function resultDepartment(event : ResultEvent) : void{
 				departmentData = ArrayCollection(event.result);
+				
+				for(var i : int = 0; i<departmentData.length; i++){
+					if(departmentData.getItemAt(i).id == student.department){
+						showDepartment.selectedIndex = i;
+					}
+				}
 			}
 			
 			private function resultMajor(event : ResultEvent) : void{
 				majorData = ArrayCollection(event.result);
+				
+				for(var i : int = 0; i<majorData.length; i++){
+					if(majorData.getItemAt(i).id == student.major){
+						showMajor.selectedIndex = i;
+					}
+				}
 			}
 			
 		]]>
@@ -136,17 +135,17 @@
 	
 	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
 		<s:Label text="年级" width="10%"/>
-		<s:ComboBox id="showGrade" dataProvider="{gradeData}" width="20%"/>
+		<s:ComboBox id="showGrade" dataProvider="{gradeData}" width="20%" labelField="name"/>
 	</s:HGroup>
 	
 	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
 		<s:Label text="学院" width="10%"/>
-		<s:ComboBox id="showDepartment" dataProvider="{departmentData}" width="20%"/>
+		<s:ComboBox id="showDepartment" dataProvider="{departmentData}" width="20%" labelField="name"/>
 	</s:HGroup>
 	
 	<s:HGroup width="100%" height="20%" horizontalAlign="center" verticalAlign="middle">
 		<s:Label text="专业" width="10%"/>
-		<s:ComboBox id="showMajor" dataProvider="{majorData}" width="20%"/>
+		<s:ComboBox id="showMajor" dataProvider="{majorData}" width="20%" labelField="name"/>
 	</s:HGroup>
 	
 	<s:HGroup width="100%" height="60%" horizontalAlign="center" verticalAlign="middle" gap="10">

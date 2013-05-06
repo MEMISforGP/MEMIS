@@ -71,7 +71,7 @@
 					<mx:DataGridColumn headerText="操作">
 						<mx:itemRenderer>
 							<fx:Component>
-								<mx:LinkButton width="50%" height="75%" label="编辑" click="parentDocument.parentDocument.displayEditUI(event)"/>
+								<mx:LinkButton width="50%" height="75%" label="编辑" click="outerDocument.displayEditUI(event)"/>
 							</fx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>

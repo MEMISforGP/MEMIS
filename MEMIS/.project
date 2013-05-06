@@ -44,7 +44,7 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<location>D:/program files/Apache Software Foundation/Tomcat 6.0/wtpwebapps/MEMIS/MEMIS-debug</location>
+			<location>C:/Program Files/Apache Software Foundation/Tomcat 6.0/wtpwebapps/MEMIS/MEMIS-debug</location>
 		</link>
 	</linkedResources>
 </projectDescription>

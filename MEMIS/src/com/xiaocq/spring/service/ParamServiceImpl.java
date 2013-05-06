@@ -32,4 +32,14 @@ public class ParamServiceImpl implements ParamService{
 		return paramDao.getGrades();
 	}
 
+	@Override
+	public List<TwoAttributes> getCategorys() {
+		return paramDao.getCategorys();
+	}
+
+	@Override
+	public List<TwoAttributes> getScale() {
+		return paramDao.getScale();
+	}
+
 }

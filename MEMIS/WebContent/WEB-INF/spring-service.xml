@@ -18,5 +18,10 @@
 		<property name="paramDao" ref="paramDao"></property>
 		<flex:remoting-destination />
 	</bean>
+	
+	<bean id="enterpriseService" class="com.xiaocq.spring.service.EnterpriseServiceImpl">
+		<property name="enterpriseDao" ref="enterpriseDao"></property>
+		<flex:remoting-destination />
+	</bean>
 
 </beans>

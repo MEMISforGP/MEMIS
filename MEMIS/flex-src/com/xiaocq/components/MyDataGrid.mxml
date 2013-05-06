@@ -60,7 +60,7 @@
 				
 				currentPage = value;
 				
-				var currentNum = currentPage * pageSize;
+				var currentNum : int = currentPage * pageSize;
 				
 				currentPageData.removeAll();
 				

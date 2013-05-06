@@ -12,11 +12,13 @@
 		<typeAlias type="com.xiaocq.domain.User" alias="User" />
 		<typeAlias type="com.xiaocq.domain.Student" alias="Student"/>
 		<typeAlias type="com.xiaocq.domain.TwoAttributes" alias="TwoAttributes"/>
+		<typeAlias type="com.xiaocq.domain.Enterprise" alias="Enterprise"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="com/xiaocq/mybatis/mapper/UserMapper.xml" />
 		<mapper resource="com/xiaocq/mybatis/mapper/StudentMapper.xml"/>
 		<mapper resource="com/xiaocq/mybatis/mapper/ParamMapper.xml"/>
+		<mapper resource="com/xiaocq/mybatis/mapper/EnterpriseMapper.xml"/>
 	</mappers>
 </configuration>

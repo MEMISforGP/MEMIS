@@ -37,8 +37,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public void addStudent(Student studnet) {
-		studentDao.addStudent(studnet);
+	public void addStudent(Student student) {
+		studentDao.addStudent(student);
 	}
 
 	@Override

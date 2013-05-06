@@ -18,6 +18,16 @@
 		<result property="name" column="grade_name"/>
 	</resultMap>
 	
+	<resultMap type="com.xiaocq.domain.TwoAttributes" id="category">
+		<result property="id" column="category_id"/>
+		<result property="name" column="category_name"/>
+	</resultMap>
+	
+	<resultMap type="com.xiaocq.domain.TwoAttributes" id="scale">
+		<result property="id" column="scale_id"/>
+		<result property="name" column="scale_name"/>
+	</resultMap>
+	
 	<select id="getDepartment" resultMap="department">
 		select * from param_department
 	</select>
@@ -28,6 +38,14 @@
 	
 	<select id="getGrades" resultMap="grade">
 		select * from param_grade
+	</select>
+	
+	<select id="getCategorys" resultMap="category">
+		select * from param_category
+	</select>
+	
+	<select id="getScale" resultMap="scale">
+		select * from param_scale
 	</select>
 	
 	
